@@ -318,8 +318,10 @@ function saveDict(dict, filePath = 'last.json') {
 /////////////////////////////
 
 app.get('/activate', (req, res) => {
+    console.log('it is working')
+    runScrape()
   res.status(200).json('Welcome, the script is running in the background');
-  const intervalId = setInterval(runScrape,INTERVAL)
+  //const intervalId = setInterval(runScrape,INTERVAL)
 });
 
 app.get('/', (req, res) => {
