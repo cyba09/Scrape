@@ -8,6 +8,29 @@ import express from 'express'
 const app = express();
 const PORT = 4000;
 ////////////////////////////////
+async function fetchData(url) {
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Check if the response was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the response as JSON
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error; // Re-throw the error to handle it outside this function
+  }
+}
+
 function saveDict(dict, filePath = 'last.json') {
     const jsonData = JSON.stringify(dict, null, 2); // Convert dict to JSON string
     writeFile(filePath, jsonData, (err) => {
@@ -318,8 +341,13 @@ function saveDict(dict, filePath = 'last.json') {
 /////////////////////////////
 
 app.get('/activate', (req, res) => {
-    console.log('it is working')
-    runScrape()
+    ///
+    fetchData('https://api.my-ip.io/v2/ip.json')
+  .then(data => console.log(data))
+  .catch(error => console.error('Error fetching data:', error));
+    ////
+    //console.log('it is working')
+    //runScrape()
   res.status(200).json('Welcome, the script is running in the background');
   //const intervalId = setInterval(runScrape,INTERVAL)
 });
