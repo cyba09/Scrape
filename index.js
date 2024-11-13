@@ -9,6 +9,7 @@ const app = express();
 const PORT = 4000;
 ////////////////////////////////
 async function fetchData(url) {
+  console.log('it is working tested today')
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -342,6 +343,7 @@ function saveDict(dict, filePath = 'last.json') {
 
 app.get('/activate', (req, res) => {
     ///
+  console.log('zzzzzzzzzzzzzzzzzzz')
     fetchData('https://api.my-ip.io/v2/ip.json')
   .then(data => console.log(data))
   .catch(error => console.error('Error fetching data:', error));
